@@ -1,22 +1,33 @@
 <template>
   <v-row>
-    <v-col cols="12" sm="8" md="4" v-for="(item, i) in list" :key="i">
-      <v-card>
-        <v-card-title class="logo py-4 d-flex justify-center">
-          {{ item.name }}
-        </v-card-title>
-        <v-card-text>
+    <v-col v-for="(item, i) in list" :key="i" cols="12" sm="12" md="3" lg="3">
+      <v-card
+        style="border-radius: 20px; width: 330px"
+        @click="goCharacters(item)"
+      >
+        <v-card-text class="p-0" style="padding: 0px">
           <v-img
             :src="getImage(item.thumbnail)"
             :alt="item.name"
             width="330px"
             height="330px"
+            style="border-radius: inherit"
           />
         </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
-        </v-card-actions>
+        <v-card-title class="d-flex justify-center">
+          <v-tooltip bottom>
+            <template #activator="{ attrs, on }">
+              <span v-bind="attrs" v-on="on">
+                {{
+                  item.name.length > 22
+                    ? item.name.substr(0, 22).concat('...')
+                    : item.name
+                }}
+              </span>
+            </template>
+            {{ item.name }}
+          </v-tooltip>
+        </v-card-title>
       </v-card>
     </v-col>
   </v-row>
@@ -24,7 +35,7 @@
 <script>
 import md5 from 'js-md5'
 export default {
-  name: 'CharatersComponent',
+  name: 'CharactersComponent',
   data() {
     return {
       token: '',
@@ -64,6 +75,10 @@ export default {
     },
     getImage(obj) {
       return obj.path.concat('.', obj.extension)
+    },
+    goCharacters(item) {
+      localStorage.setItem('setItemCharacter', JSON.stringify(item))
+      this.$router.push(`characters/${item.id}`)
     },
   },
 }

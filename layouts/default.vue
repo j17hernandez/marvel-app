@@ -26,8 +26,11 @@
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+      <v-btn icon @click="() => $router.back()">
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-chevron-right</v-icon>
       </v-btn>
       <v-btn icon @click.stop="clipped = !clipped">
         <v-icon>mdi-application</v-icon>
@@ -42,7 +45,7 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container fluid style="padding: 0px">
         <Nuxt />
       </v-container>
     </v-main>
