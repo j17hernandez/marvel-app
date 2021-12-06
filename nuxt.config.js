@@ -21,7 +21,10 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
+  marvel_app: {
+    PUBLIC_KEY: 'e8563b7bb02b8ea71c16f3341abaec33',
+    PRIVATE_KEY: '84563d2f3e026e03ed75773682e0197c8a8548d6',
+  },
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],

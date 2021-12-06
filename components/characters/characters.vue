@@ -1,52 +1,35 @@
 <template>
-  <v-row>
-    <v-col v-for="(item, i) in list" :key="i" cols="12" sm="12" md="3" lg="3">
-      <v-card
-        style="border-radius: 20px; width: 330px"
-        @click="goCharacters(item)"
-      >
-        <v-card-text class="p-0" style="padding: 0px">
-          <v-img
-            :src="getImage(item.thumbnail)"
-            :alt="item.name"
-            width="330px"
-            height="330px"
-            style="border-radius: inherit"
-          />
-        </v-card-text>
-        <v-card-title class="d-flex justify-center">
-          <v-tooltip bottom>
-            <template #activator="{ attrs, on }">
-              <span v-bind="attrs" v-on="on">
-                {{
-                  item.name.length > 22
-                    ? item.name.substr(0, 22).concat('...')
-                    : item.name
-                }}
-              </span>
-            </template>
-            {{ item.name }}
-          </v-tooltip>
-        </v-card-title>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-container>
+    <Loading v-if="loading" />
+    <v-row>
+      <v-col v-for="(item, i) in list" :key="i" cols="12" sm="12" md="3" lg="3">
+        <CardComponent name :item="item" @go="goCharacters" />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
-import md5 from 'js-md5'
+import CardComponent from '@/components/common/Cards.vue'
+import Loading from '@/components/common/loading.vue'
+import basicMixin from '@/mixins/basicMixin'
 export default {
   name: 'CharactersComponent',
+  components: {
+    CardComponent,
+    Loading,
+  },
+  mixins: [basicMixin],
   data() {
     return {
       token: '',
-      PUBLIC_KEY: 'e8563b7bb02b8ea71c16f3341abaec33',
-      PRIVATE_KEY: '84563d2f3e026e03ed75773682e0197c8a8548d6',
       list: [],
     }
   },
   created() {
+    this.loading = true
     if (localStorage.getItem('ListCharacters')) {
       this.list = JSON.parse(localStorage.getItem('ListCharacters'))
+      this.loading = false
     } else {
       this.loadHeroesCharacters()
     }
@@ -54,13 +37,13 @@ export default {
   methods: {
     loadHeroesCharacters() {
       const ts = Number(new Date())
-      const hash = md5.create()
-      hash.update(ts + this.PRIVATE_KEY + this.PUBLIC_KEY)
+      // const hash = md5.create()
+      this.hash.update(ts + this.PRIVATE_KEY + this.PUBLIC_KEY)
       this.$axios
         .$get(
           `https://gateway.marvel.com/v1/public/characters?ts=${ts}&orderBy=name&limit=20&apikey=${
             this.PUBLIC_KEY
-          }&hash=${hash.hex()}`
+          }&hash=${this.hash.hex()}`
         )
         .then((resp) => {
           localStorage.setItem(
@@ -71,6 +54,9 @@ export default {
         })
         .catch((e) => {
           console.log(e)
+        })
+        .finally(() => {
+          this.loading = false
         })
     },
     getImage(obj) {
