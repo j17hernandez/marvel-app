@@ -1,3 +1,10 @@
+# Project Marvel APP
+
+
+![character](https://user-images.githubusercontent.com/57992471/144921573-13e62b70-31e3-4e1e-94cf-0a197204d43e.png)
+
+![comics_character](https://user-images.githubusercontent.com/57992471/144921695-7e6a573a-325c-4868-8e5a-6c46f2055531.png)
+
 # marvel-app
 
 ## Build Setup
