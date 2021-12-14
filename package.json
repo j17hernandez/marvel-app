@@ -12,6 +12,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@casl/ability": "^5.4.3",
+    "@casl/vue": "^1.2.3",
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.15.1",
     "js-md5": "^0.7.3",

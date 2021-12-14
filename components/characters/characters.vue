@@ -63,8 +63,12 @@ export default {
       return obj.path.concat('.', obj.extension)
     },
     goCharacters(item) {
-      localStorage.setItem('setItemCharacter', JSON.stringify(item))
-      this.$router.push(`characters/${item.id}`)
+      if (this.$can('show', 'character')) {
+        localStorage.setItem('setItemCharacter', JSON.stringify(item))
+        this.$router.push(`characters/${item.id}`)
+      } else {
+        console.log('No tienes permisos')
+      }
     },
   },
 }

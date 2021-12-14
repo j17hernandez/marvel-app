@@ -45,6 +45,8 @@
 
 <script>
 export default {
+  name: 'MarvelApp',
+  middleware: ['permissions_tree'],
   data() {
     return {
       clipped: false,

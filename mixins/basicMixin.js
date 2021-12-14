@@ -7,12 +7,9 @@ const basicMixin = {
       PUBLIC_KEY: config.marvel_app.PUBLIC_KEY,
       PRIVATE_KEY: config.marvel_app.PRIVATE_KEY,
       loading: false,
-      hash: md5.create()
+      hash: md5.create(),
     }
-  },
-  methods: {
-
-  },
+  }
 }
 
 export default basicMixin

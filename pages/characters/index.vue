@@ -9,7 +9,7 @@
         </span>
       </div>
     </div>
-    <v-container>
+    <v-container v-if="$can('list', 'character')">
       <CharactersComponent />
     </v-container>
   </div>
